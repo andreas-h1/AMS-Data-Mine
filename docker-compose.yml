@@ -1,0 +1,55 @@
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Use Docker-managed volume
+      - /home/ams/postgres/csv_files:/data
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-network
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_WTF_CSRF_CHECK_DEFAULT: 'False'
+      PGADMIN_CONFIG_WTF_CSRF_ENABLED: 'False'
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin  # Use Docker-managed volume
+      - /home/ams/postgres/csv_files:/pgadmin/storage
+    ports:
+      - "5050:80"
+    networks:
+      - postgres-network
+    restart: always
+
+
+  tunnel:
+    container_name: cloudflared-postgres
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    networks:
+      - postgres-network
+
+
+volumes:
+  postgres_data:  # Docker-managed volume for PostgreSQL data
+  pgadmin_data:   # Docker-managed volume for pgAdmin data
+
+
+networks:
+  postgres-network:
+    driver: bridge

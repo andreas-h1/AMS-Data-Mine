@@ -1,0 +1,13 @@
+# .gitignore
+
+*.log
+*.csv
+*.zip
+*.bk
+.env
+.csv
+csv_files/
+csv_files_old/
+backups/
+pgadmin/
+data/

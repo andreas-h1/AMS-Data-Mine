@@ -2,6 +2,8 @@
 
 A migration and ETL pipeline to move legacy FileMaker Pro data into PostgreSQL, ingest and consolidate DGdata and EENDR survey CSVs (2010–2015), and maintain automated backups.
 
+![umm](AMS_Data_Pipeline_Compatible-horizontal.png)
+
 ## Repository Structure
 
 ```

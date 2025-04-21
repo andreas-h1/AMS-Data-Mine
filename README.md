@@ -74,7 +74,7 @@ What it does:
 
 ## 4. Merging Survey Data with SQL
 
-Place and edit your SQL merge scripts in the `sql/` directory. Example queries:
+Example queries for merging tables:
 
 - **sql/merge_dgdata.sql**
   ```sql

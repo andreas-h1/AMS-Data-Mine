@@ -33,18 +33,6 @@ services:
       - postgres-network
     restart: always
 
-
-  tunnel:
-    container_name: cloudflared-postgres
-    image: cloudflare/cloudflared
-    restart: unless-stopped
-    command: tunnel run
-    environment:
-      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
-    networks:
-      - postgres-network
-
-
 volumes:
   postgres_data:  # Docker-managed volume for PostgreSQL data
   pgadmin_data:   # Docker-managed volume for pgAdmin data
